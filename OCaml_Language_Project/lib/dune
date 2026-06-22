@@ -1,2 +1,3 @@
 (library
- (name OCaml_Language_Project))
+ (name OCaml_Language_Project)
+ (libraries base))
