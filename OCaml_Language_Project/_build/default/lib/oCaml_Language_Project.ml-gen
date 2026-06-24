@@ -12,6 +12,9 @@ module Infer = OCaml_Language_Project__Infer
 (** @canonical OCaml_Language_Project.Parser *)
 module Parser = OCaml_Language_Project__Parser
 
+(** @canonical OCaml_Language_Project.Pretty *)
+module Pretty = OCaml_Language_Project__Pretty
+
 (** @canonical OCaml_Language_Project.Syntax *)
 module Syntax = OCaml_Language_Project__Syntax
 
