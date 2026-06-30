@@ -8,6 +8,9 @@ type ae =
 | Sub  of {lhs: ae; 
            rhs: ae}
 | Id   of {name: string}
+| If0  of {test: ae;
+           thn: ae;
+           els: ae}
 | Func of {param_name: string;
            body: ae}
 | App  of {fun_expr: ae;

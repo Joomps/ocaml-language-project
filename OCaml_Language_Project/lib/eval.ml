@@ -9,13 +9,17 @@ let rec interp expr ds =
   | Add e -> numop Int.add e.lhs e.rhs ds
   | Sub e -> numop Int.sub e.lhs e.rhs ds
   | Id  e -> lookup e.name ds
+  | If0 e -> 
+    (match interp e.test ds with
+    | NumV {n = 0} -> interp e.thn ds
+    | _ -> (interp e.els ds))
   | Func e -> ClosureV {param_name = e.param_name; body = e.body; ds = ds}
   | App e -> 
-    match interp e.fun_expr ds with
+    (match interp e.fun_expr ds with
     | ClosureV f -> interp f.body (ASub {name = f.param_name;
                                          value = interp e.arg_expr ds;
                                          rest = f.ds})
-    | _ -> failwith "type error: interp expected function"
+    | _ -> failwith "type error: interp expected function")
 
 
 and numop op l r ds =

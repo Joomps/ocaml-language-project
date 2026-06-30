@@ -8,6 +8,9 @@ type ae =
 | Sub  of {lhs: ae; 
            rhs: ae}
 | Id   of {name: string}
+| If0  of {test: ae;
+           thn: ae;
+           els: ae}
 | Func of {param_name: string;
            body: ae}
 | App  of {fun_expr: ae;
@@ -26,3 +29,23 @@ and aeValue =
 | ClosureV of {param_name: string;
                body: ae;
                ds: defSub}
+
+(*Surface level type - what the parser outputs*)
+type sae =
+| SNum  of {n: int}
+(*| SBol  of bool *)
+| SAdd  of {lhs: sae; 
+           rhs: sae}
+| SSub  of {lhs: sae; 
+           rhs: sae}
+| SId   of {name: string}
+| SIf0  of {test: sae;
+           thn: sae;
+           els: sae}
+| SWith of {name: string;
+            named-expr: sae;
+            body: sae}
+| SFunc of {param_name: string list;
+           body: sae}
+| SApp  of {fun_expr: sae;
+           arg_expr: sae list}

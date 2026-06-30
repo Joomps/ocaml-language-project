@@ -11,3 +11,7 @@ Just because OCaml is like that, doesn't mean this new language has be the same 
 
 Like in the original language, we need a dictionary to store all the variable and function definitions.
 It'll have to be passed alongside the actual values at every step of the interpretation.
+
+
+
+While I want to skip the compiler step, as all I need from it right now is currying and removing with, it'd be too much of a hassle to add in that step later, so it'll just be very simple for now.

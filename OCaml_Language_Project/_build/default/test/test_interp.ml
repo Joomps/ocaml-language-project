@@ -1,5 +1,5 @@
 open OCaml_Language_Project
-open Syntax
+
 
 let aeValue_equal a b = a = b
 let pp_aeValue fmt v = 
@@ -13,7 +13,7 @@ let open Eval in
 Alcotest.test_case "test name" `Quick (fun () ->
   Alcotest.check aeValue_testable "failure message" 
   (interp (Num {n = 5}) MtSub)
-  (NumV {n = 2})
+  (NumV {n = 5})
 )
 
 let () =
