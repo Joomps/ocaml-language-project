@@ -43,7 +43,7 @@ type sae =
            thn: sae;
            els: sae}
 | SWith of {name: string;
-            named-expr: sae;
+            named_expr: sae;
             body: sae}
 | SFunc of {param_name: string list;
            body: sae}

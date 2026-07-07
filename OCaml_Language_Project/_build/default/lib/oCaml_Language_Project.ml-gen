@@ -9,6 +9,12 @@ module Eval = OCaml_Language_Project__Eval
 (** @canonical OCaml_Language_Project.Infer *)
 module Infer = OCaml_Language_Project__Infer
 
+(** @canonical OCaml_Language_Project.Lexer *)
+module Lexer = OCaml_Language_Project__Lexer
+
+(** @canonical OCaml_Language_Project.Parse *)
+module Parse = OCaml_Language_Project__Parse
+
 (** @canonical OCaml_Language_Project.Parser *)
 module Parser = OCaml_Language_Project__Parser
 

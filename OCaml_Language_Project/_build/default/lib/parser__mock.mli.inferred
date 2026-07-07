@@ -1,0 +1,17 @@
+type token =
+    WITH
+  | RIGHT_BRACKET
+  | PLUS
+  | MINUS
+  | LEFT_BRACKET
+  | INT of int
+  | IF0
+  | ID of string
+  | FUN
+  | EOF
+val menhir_begin_marker : int
+val xv_sae : Syntax.sae
+val xv_prog : Syntax.sae option
+val xv_list_sae_ : Syntax.sae list
+val xv_list_ID_ : string list
+val menhir_end_marker : int

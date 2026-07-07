@@ -11,6 +11,10 @@ let rec ae_to_string expr =
                             (ae_to_string e.lhs)
                             (ae_to_string e.rhs)
   | Id e -> "Id " ^ e.name
+  | If0 e -> Printf.sprintf "IF0 (%s) \n (%s) \n (%s)"
+                            (ae_to_string e.test)
+                            (ae_to_string e.thn)
+                            (ae_to_string e.els)
   | Func e -> Printf.sprintf "Func %s \n (%s)" 
                              e.param_name
                              (ae_to_string e.body)

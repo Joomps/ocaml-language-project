@@ -1,5 +1,7 @@
 (lang dune 3.23)
 
+(using menhir 3.0)
+
 (name OCaml_Language_Project)
 
 (generate_opam_files true)
