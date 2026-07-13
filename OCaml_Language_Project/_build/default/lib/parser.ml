@@ -322,18 +322,18 @@ let _menhir_action_12 =
      : (Syntax.sae))
 
 let _menhir_action_13 =
-  fun body param_name ->
+  fun body param_names ->
     (
 # 37 "lib/parser.mly"
-    (SFunc {param_name; body})
+    (SFunc {param_names; body})
 # 330 "lib/parser.ml"
      : (Syntax.sae))
 
 let _menhir_action_14 =
-  fun arg_expr fun_expr ->
+  fun arg_exprs fun_expr ->
     (
 # 39 "lib/parser.mly"
-    (SApp {fun_expr; arg_expr})
+    (SApp {fun_expr; arg_exprs})
 # 338 "lib/parser.ml"
      : (Syntax.sae))
 
@@ -668,11 +668,11 @@ include struct
       match (_tok : MenhirBasics.token) with
       | RIGHT_BRACKET ->
           let _tok = _menhir_lexer _menhir_lexbuf in
-          let MenhirCell1_list_ID_ (_menhir_stack, _, param_name) = _menhir_stack in
+          let MenhirCell1_list_ID_ (_menhir_stack, _, param_names) = _menhir_stack in
           let MenhirCell1_FUN (_menhir_stack, _) = _menhir_stack in
           let MenhirCell1_LEFT_BRACKET (_menhir_stack, _menhir_s) = _menhir_stack in
           let body = _v in
-          let _v = _menhir_action_13 body param_name in
+          let _v = _menhir_action_13 body param_names in
           _menhir_goto_sae _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
       | _ ->
           _eRR ()
@@ -698,8 +698,8 @@ include struct
       let _tok = _menhir_lexer _menhir_lexbuf in
       let MenhirCell1_sae (_menhir_stack, _, fun_expr) = _menhir_stack in
       let MenhirCell1_LEFT_BRACKET (_menhir_stack, _menhir_s) = _menhir_stack in
-      let arg_expr = _v in
-      let _v = _menhir_action_14 arg_expr fun_expr in
+      let arg_exprs = _v in
+      let _v = _menhir_action_14 arg_exprs fun_expr in
       _menhir_goto_sae _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
   
   and _menhir_run_34 : type  ttv_stack. ((ttv_stack, _menhir_box_prog) _menhir_cell1_sae as 'stack) -> _ -> _ -> _ -> ('stack, _menhir_box_prog) _menhir_state -> _ -> _menhir_box_prog =
@@ -741,8 +741,8 @@ include struct
     fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
       let MenhirCell1_sae (_menhir_stack, _, fun_expr) = _menhir_stack in
       let MenhirCell1_LEFT_BRACKET (_menhir_stack, _menhir_s) = _menhir_stack in
-      let arg_expr = _v in
-      let _v = _menhir_action_14 arg_expr fun_expr in
+      let arg_exprs = _v in
+      let _v = _menhir_action_14 arg_exprs fun_expr in
       _menhir_goto_sae _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
   
   and _menhir_run_38 : type  ttv_stack. (((ttv_stack, _menhir_box_prog) _menhir_cell1_LEFT_BRACKET, _menhir_box_prog) _menhir_cell1_WITH _menhir_cell0_ID as 'stack) -> _ -> _ -> _ -> ('stack, _menhir_box_prog) _menhir_state -> _ -> _menhir_box_prog =
@@ -868,11 +868,11 @@ include struct
     fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
       match (_tok : MenhirBasics.token) with
       | RIGHT_BRACKET ->
-          let MenhirCell1_list_ID_ (_menhir_stack, _, param_name) = _menhir_stack in
+          let MenhirCell1_list_ID_ (_menhir_stack, _, param_names) = _menhir_stack in
           let MenhirCell1_FUN (_menhir_stack, _) = _menhir_stack in
           let MenhirCell1_LEFT_BRACKET (_menhir_stack, _menhir_s) = _menhir_stack in
           let body = _v in
-          let _v = _menhir_action_13 body param_name in
+          let _v = _menhir_action_13 body param_names in
           _menhir_goto_sae _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
       | _ ->
           _eRR ()

@@ -35,17 +35,17 @@ type sae =
 | SNum  of {n: int}
 (*| SBol  of bool *)
 | SAdd  of {lhs: sae; 
-           rhs: sae}
+            rhs: sae}
 | SSub  of {lhs: sae; 
-           rhs: sae}
+            rhs: sae}
 | SId   of {name: string}
 | SIf0  of {test: sae;
-           thn: sae;
-           els: sae}
+            thn: sae;
+            els: sae}
 | SWith of {name: string;
             named_expr: sae;
             body: sae}
-| SFunc of {param_name: string list;
-           body: sae}
+| SFunc of {param_names: string list;
+            body: sae}
 | SApp  of {fun_expr: sae;
-           arg_expr: sae list}
+            arg_exprs: sae list}

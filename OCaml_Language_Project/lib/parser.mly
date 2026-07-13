@@ -33,8 +33,8 @@ sae:
     {SIf0 {test; thn; els}}
   | LEFT_BRACKET WITH name = ID named_expr = sae body = sae RIGHT_BRACKET
     {SWith {name; named_expr; body}}
-  | LEFT_BRACKET FUN LEFT_BRACKET param_name = list(ID) RIGHT_BRACKET body = sae RIGHT_BRACKET
-    {SFunc {param_name; body}}
-  | LEFT_BRACKET fun_expr = sae arg_expr = list(sae) RIGHT_BRACKET
-    {SApp {fun_expr; arg_expr}}
+  | LEFT_BRACKET FUN LEFT_BRACKET param_names = list(ID) RIGHT_BRACKET body = sae RIGHT_BRACKET
+    {SFunc {param_names; body}}
+  | LEFT_BRACKET fun_expr = sae arg_exprs = list(sae) RIGHT_BRACKET
+    {SApp {fun_expr; arg_exprs}}
   ;
