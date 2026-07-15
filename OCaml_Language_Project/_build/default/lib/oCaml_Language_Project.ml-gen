@@ -3,6 +3,9 @@
 (** @canonical OCaml_Language_Project.Desugar *)
 module Desugar = OCaml_Language_Project__Desugar
 
+(** @canonical OCaml_Language_Project.Easy_syntax *)
+module Easy_syntax = OCaml_Language_Project__Easy_syntax
+
 (** @canonical OCaml_Language_Project.Eval *)
 module Eval = OCaml_Language_Project__Eval
 

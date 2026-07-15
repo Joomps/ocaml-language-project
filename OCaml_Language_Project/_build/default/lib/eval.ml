@@ -1,9 +1,9 @@
 (* The Interpreter *)
 (* Code to output *)
 
+open Syntax
 
 let rec interp expr ds = 
-  let open Syntax in
   match expr with
   | Num e -> NumV {n = e.n}
   | Add e -> numop Int.add e.lhs e.rhs ds
@@ -21,18 +21,19 @@ let rec interp expr ds =
                                          rest = f.ds})
     | _ -> failwith "type error: interp expected function")
 
-
 and numop op l r ds =
   match interp l ds, interp r ds with
   | NumV {n = lv}, NumV {n = rv} -> NumV {n = op lv rv}
   | _ -> failwith "type error: interp expected numbers"
 
-
 and lookup name ds =
-  let open Syntax in
   match ds with
   | MtSub -> failwith ("free identifier: " ^ name)
   | ASub s -> 
     if String.equal name s.name 
       then s.value 
       else lookup name s.rest
+
+
+let interp_expr expr =
+  Pretty.aeValue_to_string (interp expr MtSub)
