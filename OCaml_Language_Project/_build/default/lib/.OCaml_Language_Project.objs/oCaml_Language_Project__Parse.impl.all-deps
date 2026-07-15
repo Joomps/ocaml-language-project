@@ -1,3 +1,6 @@
+oCaml_Language_Project__Desugar
+oCaml_Language_Project__Eval
 oCaml_Language_Project__Lexer
 oCaml_Language_Project__Parser
+oCaml_Language_Project__Pretty
 oCaml_Language_Project__Syntax

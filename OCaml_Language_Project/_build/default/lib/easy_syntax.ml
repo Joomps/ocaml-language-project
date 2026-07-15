@@ -1,4 +1,4 @@
-(* Helper functions making tests easier to write *)
+(* Helper functions that make ae's easier to write for tests *)
 
 open Syntax
 

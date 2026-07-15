@@ -9,4 +9,6 @@ let parse s =
   match Parser.prog Lexer.read lexbuf with
   | Some e -> e
   | None -> failwith "Empty input"
-  
+
+let run s = 
+  s |> parse |> Desugar.compile |> Eval.interp_expr
