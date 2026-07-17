@@ -31,7 +31,7 @@ sae:
     {SId {name = i}}
   | LEFT_BRACKET IF0 test = sae thn = sae els = sae RIGHT_BRACKET
     {SIf0 {test; thn; els}}
-  | LEFT_BRACKET WITH name = ID named_expr = sae body = sae RIGHT_BRACKET
+  | LEFT_BRACKET WITH LEFT_BRACKET name = ID named_expr = sae RIGHT_BRACKET body = sae RIGHT_BRACKET
     {SWith {name; named_expr; body}}
   | LEFT_BRACKET FUN LEFT_BRACKET param_names = list(ID) RIGHT_BRACKET body = sae RIGHT_BRACKET
     {SFunc {param_names; body}}

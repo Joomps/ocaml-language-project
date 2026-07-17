@@ -32,8 +32,5 @@ let rec defSub_to_string expr =
 
 and aeValue_to_string expr =
   match expr with
-  | NumV e -> "NumV " ^ Int.to_string e.n
-  | ClosureV e -> Printf.sprintf "ClosureV %s \n (%s) \n (%s)"
-                                 e.param_name
-                                 (ae_to_string e.body)
-                                 (defSub_to_string e.ds)
+  | NumV e -> Int.to_string e.n
+  | ClosureV e -> "function"
