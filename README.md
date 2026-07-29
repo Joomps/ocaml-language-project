@@ -2,11 +2,11 @@
 Converting CS 321 work from PLAI to OCaml, Summer 2026
 
 Project overview:
-An easy to use, type-checked, arithmetic language.
+A functional arithmetic language implemented in OCaml, built as a portfolio project targeting PL and formal verification roles. Features a two-stage pipeline with a minimal core language and a more expressive surface syntax, an environment-based interpreter using closures, and a Hindley-Milner type checker. Properties of the language will be formalized in Agda, including proofs of Progress and Preservation.
 
 
 Architecture:
-Parser (lexer.mll, parser.mly) - tokenizes input text and assembles it into an AST of sae's.
+Parser (lexer.mll, parser.mly) - tokenizes input text and assembles it into an sae AST.
 Compiler (desugar.ml) - converts from sae to ae.
 Interpreter (eval.ml) - evaluates ae, outputting the final value.
 
