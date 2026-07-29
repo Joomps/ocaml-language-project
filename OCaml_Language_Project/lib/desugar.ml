@@ -13,6 +13,9 @@ match s with
 | SWith e -> App {fun_expr = Func {param_name = e.name;
                                    body = (compile e.body)};
                   arg_expr = (compile e.named_expr)}
+| SLet e -> Let {name = e.name;
+                 named_expr = (compile e.named_expr); 
+                 body = (compile e.body)}
 | SFunc e -> 
   if List.length e.param_names < 1
     then failwith "nullary function"

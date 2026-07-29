@@ -10,6 +10,7 @@
 %token MINUS
 %token FUN
 %token WITH
+%token LET
 %token IF0
 %token EOF
 %start <Syntax.sae option> prog
@@ -33,6 +34,8 @@ sae:
     {SIf0 {test; thn; els}}
   | LEFT_BRACKET WITH LEFT_BRACKET name = ID named_expr = sae RIGHT_BRACKET body = sae RIGHT_BRACKET
     {SWith {name; named_expr; body}}
+  | LEFT_BRACKET LET LEFT_BRACKET name = ID named_expr = sae RIGHT_BRACKET body = sae RIGHT_BRACKET
+    {SLet {name; named_expr; body}}
   | LEFT_BRACKET FUN LEFT_BRACKET param_names = list(ID) RIGHT_BRACKET body = sae RIGHT_BRACKET
     {SFunc {param_names; body}}
   | LEFT_BRACKET fun_expr = sae arg_exprs = list(sae) RIGHT_BRACKET

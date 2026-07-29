@@ -2,7 +2,7 @@
 Converting CS 321 work from PLAI to OCaml, Summer 2026
 
 Project overview:
-A functional arithmetic language implemented in OCaml, built as a portfolio project targeting PL and formal verification roles. Features a two-stage pipeline with a minimal core language and a more expressive surface syntax, an environment-based interpreter using closures, and a Hindley-Milner type checker. Properties of the language will be formalized in Agda, including proofs of Progress and Preservation.
+A functional arithmetic language implemented in OCaml, built as a portfolio project targeting PL and formal verification roles. Features a two-stage pipeline with a minimal core language and a more expressive surface syntax, an environment-based interpreter using closures, and a Hindley-Milner type checker using algorithm W. Properties of the language will be formalized in Agda, including proofs of Progress and Preservation.
 
 
 Architecture:
@@ -19,3 +19,10 @@ The language uses three types of arithmetic expressions: ae, sae, and aeValue. a
 Using inline records for ae and sae as opposed to tuples trades convenience for explicitness. It makes functions like the interpreter much easier to read without needing to constantly reference the type definitions, but an easier form of syntax (easy_syntax.ml) was needed for writing compiler tests.
 
 Errors such as a nullary function or free identifier use the failwith function. This was easier to work with than using a result type or custom exceptions, but would have to be changed in a production language to improve usability. Using a result type would allow the ability to recover from errors and improve readability.
+
+on choosing HM type inference over some other approach
+(just list inference, let-polymorphism, and unification)
+
+on adding let - how it differs from with
+
+on choosing algorithm W over a two-step approach

@@ -11,6 +11,9 @@ type ae =
 | If0  of {test: ae;
            thn: ae;
            els: ae}
+| Let  of {name: string;
+           named_expr: ae;
+           body: ae}
 | Func of {param_name: string;
            body: ae}
 | App  of {fun_expr: ae;
@@ -43,6 +46,9 @@ type sae =
             thn: sae;
             els: sae}
 | SWith of {name: string;
+            named_expr: sae;
+            body: sae}
+| SLet  of {name: string;
             named_expr: sae;
             body: sae}
 | SFunc of {param_names: string list;

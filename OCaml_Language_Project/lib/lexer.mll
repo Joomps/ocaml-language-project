@@ -18,9 +18,10 @@ rule read =
   | newline  { new_line lexbuf; read lexbuf }
   | int      { INT (int_of_string (Lexing.lexeme lexbuf)) }
   | id {match Lexing.lexeme lexbuf with
-        | "fun" -> FUN
-        | "with" -> WITH
         | "if0" -> IF0
+        | "with" -> WITH
+        | "let" -> LET
+        | "fun" -> FUN
         | _ -> ID (Lexing.lexeme lexbuf)}
   | '+'      { PLUS }
   | '-'      { MINUS }

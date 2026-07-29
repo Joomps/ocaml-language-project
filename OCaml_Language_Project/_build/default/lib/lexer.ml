@@ -160,41 +160,42 @@ and __ocaml_lex_read_rec lexbuf __ocaml_lex_state =
   | 3 ->
 # 20 "lib/lexer.mll"
        (match Lexing.lexeme lexbuf with
-        | "fun" -> FUN
-        | "with" -> WITH
         | "if0" -> IF0
+        | "with" -> WITH
+        | "let" -> LET
+        | "fun" -> FUN
         | _ -> ID (Lexing.lexeme lexbuf))
-# 168 "lib/lexer.ml"
+# 169 "lib/lexer.ml"
 
   | 4 ->
-# 25 "lib/lexer.mll"
+# 26 "lib/lexer.mll"
              ( PLUS )
-# 173 "lib/lexer.ml"
+# 174 "lib/lexer.ml"
 
   | 5 ->
-# 26 "lib/lexer.mll"
+# 27 "lib/lexer.mll"
              ( MINUS )
-# 178 "lib/lexer.ml"
+# 179 "lib/lexer.ml"
 
   | 6 ->
-# 27 "lib/lexer.mll"
+# 28 "lib/lexer.mll"
              ( LEFT_BRACKET )
-# 183 "lib/lexer.ml"
+# 184 "lib/lexer.ml"
 
   | 7 ->
-# 28 "lib/lexer.mll"
+# 29 "lib/lexer.mll"
              ( RIGHT_BRACKET )
-# 188 "lib/lexer.ml"
+# 189 "lib/lexer.ml"
 
   | 8 ->
-# 29 "lib/lexer.mll"
+# 30 "lib/lexer.mll"
       ( raise (SyntaxError ("Unexpected char: " ^ Lexing.lexeme lexbuf)) )
-# 193 "lib/lexer.ml"
+# 194 "lib/lexer.ml"
 
   | 9 ->
-# 30 "lib/lexer.mll"
+# 31 "lib/lexer.mll"
              ( EOF )
-# 198 "lib/lexer.ml"
+# 199 "lib/lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_read_rec lexbuf __ocaml_lex_state

@@ -48,6 +48,11 @@ let test_interp () = [
   (Parse.run "{+ 2 {with {x 3} {+ x 2}}}")
   "7"
 );
+Alcotest.test_case "Let" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Let failed" 
+  (Parse.run "{+ 2 {let {x 3} {+ x 2}}}")
+  "7"
+);
   Alcotest.test_case "With and Currying 1" `Quick (fun () ->
   Alcotest.check Alcotest.string "With and Currying failed" 
   (Parse.run "{with {x 0}

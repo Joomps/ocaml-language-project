@@ -13,6 +13,10 @@ let rec interp expr ds =
     (match interp e.test ds with
     | NumV {n = 0} -> interp e.thn ds
     | _ -> (interp e.els ds))
+  | Let e -> 
+    interp e.body (ASub {name = e.name;
+                         value = interp e.named_expr ds;
+                         rest = ds}) 
   | Func e -> ClosureV {param_name = e.param_name; body = e.body; ds = ds}
   | App e -> 
     (match interp e.fun_expr ds with

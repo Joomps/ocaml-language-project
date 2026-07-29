@@ -6,6 +6,7 @@ type token =
   | RIGHT_BRACKET
   | PLUS
   | MINUS
+  | LET
   | LEFT_BRACKET
   | INT of (int)
   | IF0

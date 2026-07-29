@@ -15,6 +15,10 @@ let rec ae_to_string expr =
                             (ae_to_string e.test)
                             (ae_to_string e.thn)
                             (ae_to_string e.els)
+  | Let e -> Printf.sprintf "Let %s \n (%s) \n (%s)"
+                            e.name
+                            (ae_to_string e.named_expr)
+                            (ae_to_string e.body)
   | Func e -> Printf.sprintf "Func %s \n (%s)" 
                              e.param_name
                              (ae_to_string e.body)
