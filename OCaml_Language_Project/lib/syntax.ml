@@ -33,7 +33,7 @@ and aeValue =
                body: ae;
                ds: defSub}
 
-(*Surface level type - what the parser outputs*)
+
 type sae =
 | SNum  of {n: int}
 (*| SBol  of bool *)
