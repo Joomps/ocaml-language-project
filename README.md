@@ -23,6 +23,8 @@ Errors such as a nullary function or free identifier use the failwith function. 
 on choosing HM type inference over some other approach
 (just list inference, let-polymorphism, and unification)
 
-on adding let - how it differs from with
+on adding let - how it differs from with (doenst get compiled into a function call)
 
 on choosing algorithm W over a two-step approach
+
+known limitation - unable to conclusively test let-generalization without a richer type system

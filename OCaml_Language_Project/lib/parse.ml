@@ -12,3 +12,6 @@ let parse s =
 
 let run s = 
   s |> parse |> Desugar.compile |> Eval.interp_expr
+
+let run_typed s = 
+  s |> parse |> Desugar.compile |> Infer.type_check_expr

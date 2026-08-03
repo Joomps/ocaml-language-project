@@ -38,3 +38,18 @@ and aeValue_to_string expr =
   match expr with
   | NumV e -> Int.to_string e.n
   | ClosureV e -> "function"
+
+
+let rec ty_to_string expr =
+  let open Types in
+  match expr with
+  | TNum -> "TNum"
+  | TFun e -> Printf.sprintf "TFun \n (%s \n  %s)"
+                             (ty_to_string e.input)
+                             (ty_to_string e.output)
+  | TVar e -> 
+    (match !(e.contents) with
+    | Unbound u -> Printf.sprintf "Unbound (%s %s)"
+                                  u.name
+                                  (Int.to_string u.level)
+    | Link l -> (ty_to_string l.ty))

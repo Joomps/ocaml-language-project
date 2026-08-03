@@ -1,5 +1,6 @@
 open OCaml_Language_Project
 
+
 let ae_equal a b = a = b
 let pp_ae fmt v = 
   Format.pp_print_string fmt (Pretty.ae_to_string v)
@@ -9,6 +10,13 @@ let aeValue_equal a b = a = b
 let pp_aeValue fmt v = 
   Format.pp_print_string fmt (Pretty.aeValue_to_string v)
 let aeValue_testable = Alcotest.testable pp_aeValue aeValue_equal
+
+let ty_equal a b = a = b
+let pp_ty fmt v = 
+  Format.pp_print_string fmt (Pretty.ty_to_string v)
+let ty_testable = Alcotest.testable pp_ty ty_equal
+
+
 
 
 let test_interp () = [
@@ -136,8 +144,7 @@ let test_compile () =
       (num 0))
 );]
 
-let test_errors () =
-  let open Easy_syntax in [
+let test_errors () = [
   Alcotest.test_case "Nullary function" `Quick (fun () ->
   Alcotest.(check_raises "should fail" (Failure "nullary function") (fun () ->
     ignore (Parse.run "{fun {} 5}")
@@ -174,9 +181,48 @@ let test_errors () =
   ))
 );]
 
+let test_type_check () = [
+ Alcotest.test_case "TNum" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Num failed" 
+  (Parse.run_typed "{+ 1 2}")
+  "TNum"
+);
+ Alcotest.test_case "Unification" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Unification failed" 
+  (Parse.run_typed "{fun {x} {+ x 1}}")
+  "TFun \n (TNum \n  TNum)"
+);
+Alcotest.test_case "Let generalization 1" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Let failed" 
+  (Parse.run_typed "{let {f {fun {x} x}} {f 1}}")
+  "TNum"
+);
+Alcotest.test_case "Let generalization 2" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Let failed" 
+  (Parse.run_typed "{let {x {fun {y} y}} {+ {x 1} {x 1}}}")
+  "TNum"
+);
+Alcotest.test_case "Let generalization 3" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Let failed" 
+  (Parse.run_typed "{fun {x} {let {y x} {+ y 1}}}")
+  "TFun \n (TNum \n  TNum)"
+);
+Alcotest.test_case "Let generalization 4" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Let failed" 
+  (Parse.run_typed "{let {f {fun {x} x}} {let {g {fun {y} {f y}}} {g 1}}}")
+  "TNum"
+);
+Alcotest.test_case "Let generalization 5" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Let failed" 
+  (Parse.run_typed "{let {f {fun {x} x}} {+ {f 1} {f 1}}}")
+  "TNum"
+);
+]
+
 let () =
   Alcotest.run "Pipeline tests" [
     "interp", test_interp ();
     "compile", test_compile ();
     "errors", test_errors ();
+    "type_check", test_type_check ();
   ]

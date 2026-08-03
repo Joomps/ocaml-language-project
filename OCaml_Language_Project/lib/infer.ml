@@ -14,38 +14,39 @@ let rec type_check expr env lvl =
   match expr with
   | Num e -> TNum
   | Add e ->
-    let lhs_ty = type_check e.lhs env lvl in
-    let rhs_ty = type_check e.rhs env lvl in
-    if lhs_ty = TNum && rhs_ty = TNum
-    then TNum
-    else failwith ("type error: Add expected num")
+    let lhs_ty = force (type_check e.lhs env lvl) in
+    let rhs_ty = force (type_check e.rhs env lvl) in
+    unify lhs_ty TNum;
+    unify rhs_ty TNum;
+    TNum
   | Sub e -> 
-    let lhs_ty = type_check e.lhs env lvl in
-    let rhs_ty = type_check e.rhs env lvl in
-    if lhs_ty = TNum && rhs_ty = TNum
-    then TNum
-    else failwith ("type error: Sub expected num")
+    let lhs_ty = force (type_check e.lhs env lvl) in
+    let rhs_ty = force (type_check e.rhs env lvl) in
+    unify lhs_ty TNum;
+    unify rhs_ty TNum;
+    TNum
   | Id e -> instantiate (lookup e.name env) lvl
   | If0 e -> 
-    let test_ty = type_check e.test env lvl in
-    let thn_ty = type_check e.thn env lvl in
-    let els_ty = type_check e.els env lvl in
+    let test_ty = force (type_check e.test env lvl) in
+    let thn_ty = force (type_check e.thn env lvl) in
+    let els_ty = force (type_check e.els env lvl) in
     if test_ty = TNum
-    then if thn_ty = els_ty
-         then thn_ty
-         else failwith ("type error: If0 then else mismatch")
+      then begin
+        unify thn_ty els_ty;
+        thn_ty
+      end
     else failwith ("type error: If0 expected num test")
   | Let e -> 
     let named_ty = type_check e.named_expr env (lvl + 1) in
-    generalize named_ty (lvl + 1);
+    generalize named_ty (lvl);
     type_check e.body (ATyp {name = e.name; ty = named_ty; rest = env}) lvl
   | Func e -> 
     let param_ty = TVar {contents = ref (Unbound {name = new_id "α"; level = lvl})} in
     TFun {input = param_ty;
           output = type_check e.body (ATyp {name = e.param_name; ty = param_ty; rest = env}) lvl}
   | App e ->
-    let fun_ty = type_check e.fun_expr env lvl in
-    let arg_ty = type_check e.arg_expr env lvl in
+    let fun_ty = force (type_check e.fun_expr env lvl) in
+    let arg_ty = force (type_check e.arg_expr env lvl) in
     let return_ty = TVar {contents = ref (Unbound {name = new_id "β"; level = lvl})} in
     unify fun_ty (TFun {input = arg_ty; output = return_ty});
     return_ty
@@ -127,3 +128,14 @@ match ty2 with
   (match !(t.contents) with 
   | Unbound _ -> tvar_ref == t.contents
   | Link l -> occurs tvar_ref l.ty)
+
+and force ty = 
+  match ty with
+  | TVar t -> 
+    (match !(t.contents) with
+    | Link l -> force l.ty
+    | _ -> ty)
+  | _ -> ty
+
+let type_check_expr expr =
+  Pretty.ty_to_string (type_check expr MtTyp 0)

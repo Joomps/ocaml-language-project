@@ -1,1 +1,1 @@
-lib/parse.ml: Base Desugar Eval Lexer Lexing Parser
+lib/parse.ml: Base Desugar Eval Infer Lexer Lexing Parser

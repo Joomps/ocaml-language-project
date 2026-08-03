@@ -1,1 +1,1 @@
-lib/infer.ml: Hashtbl String Syntax Types
+lib/infer.ml: Hashtbl Pretty String Syntax Types
