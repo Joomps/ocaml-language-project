@@ -1,1 +1,1 @@
-lib/pretty.ml: Int Printf Syntax Types
+lib/pretty.ml: Bool Int Printf Syntax Types

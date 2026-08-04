@@ -2,6 +2,7 @@
 
 type ty =
   | TNum
+  | TBool
   | TFun of {input: ty; output: ty}
   | TVar of {contents: tvar ref}
 
@@ -9,7 +10,7 @@ and tvar =
   | Unbound of {name: string; level: int}
   | Link of {ty: ty}
 
-  
+
 type type_env =
   | MtTyp  
   | ATyp of {name: string;

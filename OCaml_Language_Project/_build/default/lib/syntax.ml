@@ -18,6 +18,11 @@ type ae =
            body: ae}
 | App  of {fun_expr: ae;
            arg_expr: ae}
+| True
+| False
+| IfB of {test: ae;
+           thn: ae;
+           els: ae}
 
            
 type defSub =
@@ -29,6 +34,7 @@ type defSub =
 
 and aeValue =
 | NumV of {n: int}
+| BoolV of {b: bool}
 | ClosureV of {param_name: string;
                body: ae;
                ds: defSub}
@@ -55,4 +61,9 @@ type sae =
             body: sae}
 | SApp  of {fun_expr: sae;
             arg_exprs: sae list}
+| STrue
+| SFalse
+| SIfB of {test: sae;
+           thn: sae;
+           els: sae}
 

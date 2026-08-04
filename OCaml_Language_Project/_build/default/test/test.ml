@@ -80,7 +80,8 @@ Alcotest.test_case "Let" `Quick (fun () ->
                               9}}
                     1 2 3}}")
   "9"
-);]
+);
+]
 
 let test_compile () =
   let open Easy_syntax in [
@@ -142,7 +143,8 @@ let test_compile () =
                                   (num 9)))))
               (num 1))(num 2))(num 3)))
       (num 0))
-);]
+);
+]
 
 let test_errors () = [
   Alcotest.test_case "Nullary function" `Quick (fun () ->
@@ -179,7 +181,8 @@ let test_errors () = [
                                         9}}
                                    1 2 3}}")
   ))
-);]
+);
+]
 
 let test_type_check () = [
  Alcotest.test_case "TNum" `Quick (fun () ->
@@ -204,22 +207,17 @@ Alcotest.test_case "Let generalization 2" `Quick (fun () ->
 );
 Alcotest.test_case "Let generalization 3" `Quick (fun () ->
   Alcotest.check Alcotest.string "Let failed" 
-  (Parse.run_typed "{fun {x} {let {y x} {+ y 1}}}")
-  "TFun \n (TNum \n  TNum)"
+  (Parse.run_typed "{let {f {fun {x} x}} {let {g {fun {y} {f y}}} {g 1}}}")
+  "TNum"
 );
 Alcotest.test_case "Let generalization 4" `Quick (fun () ->
   Alcotest.check Alcotest.string "Let failed" 
-  (Parse.run_typed "{let {f {fun {x} x}} {let {g {fun {y} {f y}}} {g 1}}}")
+  (Parse.run_typed "{let {f {fun {x} x}} {ifb {f true} {f 1} {f 2}}}")
   "TNum"
 );
 Alcotest.test_case "Let generalization 5" `Quick (fun () ->
   Alcotest.check Alcotest.string "Let failed" 
-  (Parse.run_typed "{let {f {fun {x} x}} {+ {f 1} {f 1}}}")
-  "TNum"
-);
-Alcotest.test_case "Let generalization 6" `Quick (fun () ->
-  Alcotest.check Alcotest.string "Let failed" 
-  (Parse.run_typed "{let {f {fun {x} x}} {if0 {f 1} {f 2} {f 3}}}")
+  (Parse.run_typed "{let {f {fun {x} x}} {ifb {f true} {f 1} {f 2}}}")
   "TNum"
 );
 ]

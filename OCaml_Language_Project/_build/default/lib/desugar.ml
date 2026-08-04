@@ -10,6 +10,9 @@ match s with
 | SSub e -> Sub {lhs = (compile e.lhs); rhs = (compile e.rhs)}
 | SId e -> Id {name = e.name}
 | SIf0 e -> If0 {test = (compile e.test); thn = (compile e.thn); els = (compile e.els)}
+| STrue -> True
+| SFalse -> False
+| SIfB e -> IfB {test = (compile e.test); thn = (compile e.thn); els = (compile e.els)}
 | SWith e -> App {fun_expr = Func {param_name = e.name;
                                    body = (compile e.body)};
                   arg_expr = (compile e.named_expr)}

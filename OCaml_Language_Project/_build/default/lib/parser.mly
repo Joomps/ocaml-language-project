@@ -9,9 +9,12 @@
 %token PLUS
 %token MINUS
 %token FUN
+%token IF0
+%token TRUE
+%token FALSE
+%token IFB
 %token WITH
 %token LET
-%token IF0
 %token EOF
 %start <Syntax.sae option> prog
 %%
@@ -32,6 +35,12 @@ sae:
     {SId {name = i}}
   | LEFT_BRACKET IF0 test = sae thn = sae els = sae RIGHT_BRACKET
     {SIf0 {test; thn; els}}
+  | TRUE
+    {STrue}
+  | FALSE
+    {SFalse}
+  | LEFT_BRACKET IFB test = sae thn = sae els = sae RIGHT_BRACKET
+    {SIfB {test; thn; els}}
   | LEFT_BRACKET WITH LEFT_BRACKET name = ID named_expr = sae RIGHT_BRACKET body = sae RIGHT_BRACKET
     {SWith {name; named_expr; body}}
   | LEFT_BRACKET LET LEFT_BRACKET name = ID named_expr = sae RIGHT_BRACKET body = sae RIGHT_BRACKET

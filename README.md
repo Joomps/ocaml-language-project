@@ -27,4 +27,4 @@ on adding let - how it differs from with (doenst get compiled into a function ca
 
 on choosing algorithm W over a two-step approach
 
-known limitation - unable to conclusively test let-generalization without a richer type system
+on needing bools to properly test let-polymorphism

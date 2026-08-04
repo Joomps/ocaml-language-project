@@ -1,14 +1,17 @@
 type token =
     WITH
+  | TRUE
   | RIGHT_BRACKET
   | PLUS
   | MINUS
   | LET
   | LEFT_BRACKET
   | INT of int
+  | IFB
   | IF0
   | ID of string
   | FUN
+  | FALSE
   | EOF
 val menhir_begin_marker : int
 val xv_sae : Syntax.sae

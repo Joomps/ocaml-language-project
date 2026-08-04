@@ -36,6 +36,17 @@ let rec type_check expr env lvl =
         thn_ty
       end
     else failwith ("type error: If0 expected num test")
+  | True | False -> TBool
+  | IfB e -> 
+    let test_ty = force (type_check e.test env lvl) in
+    let thn_ty = force (type_check e.thn env lvl) in
+    let els_ty = force (type_check e.els env lvl) in
+    if test_ty = TBool
+      then begin
+        unify thn_ty els_ty;
+        thn_ty
+      end
+    else failwith ("type error: If0 expected bool test")
   | Let e -> 
     let named_ty = type_check e.named_expr env (lvl + 1) in
     generalize named_ty (lvl);
@@ -64,7 +75,7 @@ and instantiate ty lvl  =
   let sub_tbl = Hashtbl.create 16 in
   let rec walk ty =
     match ty with 
-    | TNum -> ty
+    | TNum | TBool -> ty
     | TFun t -> TFun {input = walk t.input; output = walk t.output}
     | TVar t -> 
       (match !(t.contents) with
@@ -83,7 +94,7 @@ and instantiate ty lvl  =
 
 and generalize ty lvl = 
   match ty with
-  | TNum -> ()
+  | TNum | TBool -> ()
   | TFun t -> 
     generalize t.input lvl;
     generalize t.output lvl
@@ -99,8 +110,7 @@ and generalize ty lvl =
 and unify ty1 ty2 =
   match ty1, ty2 with
   | TNum, TNum -> ()
-  | TNum, TFun _ -> failwith ("type error: expected num, got function")
-  | TFun _, TNum -> failwith ("type error: expected function, got num")
+  | TBool, TBool -> ()
   | TFun t1, TFun t2 ->
     unify t1.input t2.input;
     unify t1.output t2.output
@@ -118,10 +128,11 @@ and unify ty1 ty2 =
       then failwith "type error: infinite type"
       else r.contents := Link {ty = t}
     | Link l -> unify l.ty t)
+  | _ -> failwith "type error: cannot unify"
 
 and occurs tvar_ref ty2 =
 match ty2 with
-| TNum -> false
+| TNum | TBool -> false
 | TFun t -> 
   occurs tvar_ref t.input || occurs tvar_ref t.output
 | TVar t -> 

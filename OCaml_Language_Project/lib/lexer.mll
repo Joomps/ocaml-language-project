@@ -19,6 +19,9 @@ rule read =
   | int      { INT (int_of_string (Lexing.lexeme lexbuf)) }
   | id {match Lexing.lexeme lexbuf with
         | "if0" -> IF0
+        | "true" -> TRUE
+        | "false" -> FALSE
+        | "ifb" -> IFB
         | "with" -> WITH
         | "let" -> LET
         | "fun" -> FUN

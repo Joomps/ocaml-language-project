@@ -3,15 +3,18 @@
 
 type token = 
   | WITH
+  | TRUE
   | RIGHT_BRACKET
   | PLUS
   | MINUS
   | LET
   | LEFT_BRACKET
   | INT of (int)
+  | IFB
   | IF0
   | ID of (string)
   | FUN
+  | FALSE
   | EOF
 
 (* This exception is raised by the monolithic API functions. *)

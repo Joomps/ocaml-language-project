@@ -11,8 +11,20 @@ let rec interp expr ds =
   | Id  e -> lookup e.name ds
   | If0 e -> 
     (match interp e.test ds with
-    | NumV {n = 0} -> interp e.thn ds
-    | _ -> (interp e.els ds))
+    | NumV n -> 
+      if n.n = 0
+      then interp e.thn ds
+      else interp e.els ds
+    | _ -> failwith "type error: interp expected num test")
+  | True -> BoolV {b = true}
+  | False -> BoolV {b = false}
+  | IfB e -> 
+    (match interp e.test ds with
+    | BoolV b -> 
+      if b.b
+      then interp e.thn ds
+      else interp e.els ds
+    | _ -> failwith "type error: interp expected bool test")
   | Let e -> 
     interp e.body (ASub {name = e.name;
                          value = interp e.named_expr ds;
