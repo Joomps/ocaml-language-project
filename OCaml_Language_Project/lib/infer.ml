@@ -109,8 +109,7 @@ and generalize ty lvl =
 
 and unify ty1 ty2 =
   match ty1, ty2 with
-  | TNum, TNum -> ()
-  | TBool, TBool -> ()
+  | TNum, TNum | TBool, TBool -> ()
   | TFun t1, TFun t2 ->
     unify t1.input t2.input;
     unify t1.output t2.output
