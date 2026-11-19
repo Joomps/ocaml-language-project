@@ -7,22 +7,19 @@
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github Joomps/ocaml-language-project))
 
-(authors "Author Name <author@example.com>")
+(authors "Anna Matkowsky <annamatkowsky1@gmail.com>")
 
-(maintainers "Maintainer Name <maintainer@example.com>")
+(maintainers "Anna Matkowsky <annamatkowsky1@gmail.com>")
 
-(license LICENSE)
-
-(documentation https://url/to/documentation)
+(license MIT)
 
 (package
  (name OCaml_Language_Project)
- (synopsis "A short synopsis")
- (description "A longer description")
- (depends ocaml)
+ (synopsis "Typed functional language in OCaml with Hindley-Milner type inference")
+ (depends (ocaml (>= 4.13)) menhir base (alcotest :with-test))
  (tags
-  ("add topics" "to describe" your project)))
+  ("programming-languages" "type-inference" "hindley-milner" "interpreter")))
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html

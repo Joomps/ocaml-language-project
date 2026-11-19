@@ -2,7 +2,6 @@
 
 type ae = 
 | Num  of {n: int}
-(*| Bol  of bool *)
 | Add  of {lhs: ae; 
            rhs: ae}
 | Sub  of {lhs: ae; 
@@ -42,7 +41,6 @@ and aeValue =
 
 type sae =
 | SNum  of {n: int}
-(*| SBol  of bool *)
 | SAdd  of {lhs: sae; 
             rhs: sae}
 | SSub  of {lhs: sae; 
