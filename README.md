@@ -23,7 +23,7 @@ Errors such as a nullary function or free identifier use the failwith function. 
 
 The language uses a Hindley-Milner type system so that the user doesn't need to include type annotations anywhere in their program. HM also supports let-polymorphism, allowing a single function (such as the identity function) to be used on any data type.
 
-The type checker uses a variant of algorithm W using mutable unification variables rather than explicit substitutions, following Oleg Kiselyov's tutorial (https://okmij.org/ftp/ML/generalization.html). This approach means a simpler data structure, earlier error detection, and is the approach production compilers including OCaml's own type checker.
+The type checker uses a variant of algorithm W using mutable unification variables rather than explicit substitutions, following Oleg Kiselyov's tutorial (https://okmij.org/ftp/ML/generalization.html). This approach means a simpler data structure and earlier error detection.
 
 While with expressions are handled by replacing them with a function call in the compiler, let expressions are left as is. This is required for let-generalization as desugaring let into a function call would remove the point at which HM generalizes type variables. 
 

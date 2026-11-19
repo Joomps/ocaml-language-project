@@ -50,6 +50,7 @@ and lookup name ds =
       then s.value 
       else lookup name s.rest
 
+let eval expr = interp expr MtSub
 
 let interp_expr expr =
-  Pretty.aeValue_to_string (interp expr MtSub)
+  Pretty.aeValue_to_string (eval expr)

@@ -139,13 +139,8 @@ match ty2 with
   | Unbound _ -> tvar_ref == t.contents
   | Link l -> occurs tvar_ref l.ty)
 
-and force ty = 
-  match ty with
-  | TVar t -> 
-    (match !(t.contents) with
-    | Link l -> force l.ty
-    | _ -> ty)
-  | _ -> ty
+
+let infer expr = type_check expr MtTyp 0
 
 let type_check_expr expr =
-  Pretty.ty_to_string (type_check expr MtTyp 0)
+  Pretty.ty_to_string (infer expr)

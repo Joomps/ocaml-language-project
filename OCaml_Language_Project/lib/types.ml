@@ -16,3 +16,11 @@ type type_env =
   | ATyp of {name: string;
              ty: ty;
              rest: type_env}
+
+let rec force ty = 
+  match ty with
+  | TVar t -> 
+    (match !(t.contents) with
+    | Link l -> force l.ty
+    | _ -> ty)
+  | _ -> ty             

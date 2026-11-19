@@ -60,4 +60,4 @@ let rec ty_to_string expr =
     | Unbound u -> Printf.sprintf "Unbound (%s %s)"
                                   u.name
                                   (Int.to_string u.level)
-    | Link l -> (ty_to_string l.ty))
+    | Link l -> (ty_to_string (force l.ty)))
