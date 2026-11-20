@@ -1,0 +1,4 @@
+{let {f {fun {x} x}} 
+     {ifb {f true} 
+          {f 1} 
+          {f 2}}}

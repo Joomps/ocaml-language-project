@@ -146,6 +146,61 @@ let test_compile () =
 );
 ]
 
+let test_type_check () = [
+ Alcotest.test_case "TNum" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Num failed" 
+  (Parse.run_typed "{+ 1 2}")
+  "Num"
+);
+ Alcotest.test_case "Unification" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Unification failed" 
+  (Parse.run_typed "{fun {x} {+ x 1}}")
+  "Fun \n (Num \n  Num)"
+);
+Alcotest.test_case "Let generalization 1" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Let failed" 
+  (Parse.run_typed "{let {f {fun {x} x}} {f 1}}")
+  "Num"
+);
+Alcotest.test_case "Let generalization 2" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Let failed" 
+  (Parse.run_typed "{let {x {fun {y} y}} {+ {x 1} {x 1}}}")
+  "Num"
+);
+Alcotest.test_case "Let generalization 3" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Let failed" 
+  (Parse.run_typed "{let {f {fun {x} x}} {let {g {fun {y} {f y}}} {g 1}}}")
+  "Num"
+);
+Alcotest.test_case "Let generalization 4" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Let failed" 
+  (Parse.run_typed "{let {f {fun {x} x}} {ifb {f true} {f 1} {f 2}}}")
+  "Num"
+);
+Alcotest.test_case "Let generalization 5" `Quick (fun () ->
+  Alcotest.check Alcotest.string "Let failed" 
+  (Parse.run_typed "{let {f {fun {x} x}} {ifb {f true} {f 1} {f 2}}}")
+  "Num"
+);
+Alcotest.test_case "With" `Quick (fun () ->
+  Alcotest.check Alcotest.string "With failed" 
+  (Parse.run_typed "{with {x 5}              
+                          {{fun {a b c}
+                                {if0 x
+                                    {+ {+ a b} c}
+                                    9}}
+                           1 2 3}}")
+  "Num"
+);
+Alcotest.test_case "If0" `Quick (fun () ->
+  Alcotest.check Alcotest.string "With failed" 
+  (Parse.run_typed "{if0 {{fun {x} x} 5}
+                         0
+                         1}")
+  "Num"
+);
+]
+
 let test_errors () = [
   Alcotest.test_case "Nullary function" `Quick (fun () ->
   Alcotest.(check_raises "should fail" (Failure "nullary function") (fun () ->
@@ -182,60 +237,29 @@ let test_errors () = [
                                    1 2 3}}")
   ))
 );
-]
-
-let test_type_check () = [
- Alcotest.test_case "TNum" `Quick (fun () ->
-  Alcotest.check Alcotest.string "Num failed" 
-  (Parse.run_typed "{+ 1 2}")
-  "TNum"
+  Alcotest.test_case "Free identifier" `Quick (fun () ->
+  Alcotest.(check_raises "should fail" (Failure "free identifier: x") (fun () ->
+    ignore (Parse.run_typed "x")
+        ))
 );
- Alcotest.test_case "Unification" `Quick (fun () ->
-  Alcotest.check Alcotest.string "Unification failed" 
-  (Parse.run_typed "{fun {x} {+ x 1}}")
-  "TFun \n (TNum \n  TNum)"
+Alcotest.test_case "Add Type mismatch" `Quick (fun () ->
+  Alcotest.(check_raises "should fail" (Failure "type error: cannot unify") (fun () ->
+    ignore (Parse.run_typed "{+ 1 true}")
+        ))
 );
-Alcotest.test_case "Let generalization 1" `Quick (fun () ->
-  Alcotest.check Alcotest.string "Let failed" 
-  (Parse.run_typed "{let {f {fun {x} x}} {f 1}}")
-  "TNum"
+Alcotest.test_case "Infinite type" `Quick (fun () ->
+  Alcotest.(check_raises "should fail" (Failure "type error: infinite type") (fun () ->
+    ignore (Parse.run_typed "{fun {x} {x x}}")
+        ))
 );
-Alcotest.test_case "Let generalization 2" `Quick (fun () ->
-  Alcotest.check Alcotest.string "Let failed" 
-  (Parse.run_typed "{let {x {fun {y} y}} {+ {x 1} {x 1}}}")
-  "TNum"
-);
-Alcotest.test_case "Let generalization 3" `Quick (fun () ->
-  Alcotest.check Alcotest.string "Let failed" 
-  (Parse.run_typed "{let {f {fun {x} x}} {let {g {fun {y} {f y}}} {g 1}}}")
-  "TNum"
-);
-Alcotest.test_case "Let generalization 4" `Quick (fun () ->
-  Alcotest.check Alcotest.string "Let failed" 
-  (Parse.run_typed "{let {f {fun {x} x}} {ifb {f true} {f 1} {f 2}}}")
-  "TNum"
-);
-Alcotest.test_case "Let generalization 5" `Quick (fun () ->
-  Alcotest.check Alcotest.string "Let failed" 
-  (Parse.run_typed "{let {f {fun {x} x}} {ifb {f true} {f 1} {f 2}}}")
-  "TNum"
-);
-Alcotest.test_case "With" `Quick (fun () ->
-  Alcotest.check Alcotest.string "With failed" 
-  (Parse.run_typed "{with {x 5}              
-                          {{fun {a b c}
-                                {if0 x
-                                    {+ {+ a b} c}
-                                    9}}
-                           1 2 3}}")
-  "TNum"
-);
-Alcotest.test_case "If0" `Quick (fun () ->
-  Alcotest.check Alcotest.string "With failed" 
-  (Parse.run_typed "{if0 {{fun {x} x} 5}
-                         0
-                         1}")
-  "TNum"
+Alcotest.test_case "Fun monomorphic" `Quick (fun () ->
+  Alcotest.(check_raises "should fail" (Failure "type error: cannot unify") (fun () ->
+    ignore (Parse.run_typed "{{fun {f} 
+                                   {ifb {f true} 
+                                        {f 1} 
+                                        {f 2}}}
+                              {fun {x} x}}")
+        ))
 );
 ]
 
@@ -243,6 +267,6 @@ let () =
   Alcotest.run "Pipeline tests" [
     "interp", test_interp ();
     "compile", test_compile ();
-    "errors", test_errors ();
     "type_check", test_type_check ();
+    "errors", test_errors ();
   ]

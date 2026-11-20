@@ -50,9 +50,9 @@ and aeValue_to_string expr =
 let rec ty_to_string expr =
   let open Types in
   match expr with
-  | TNum -> "TNum"
-  | TBool -> "TBool"
-  | TFun e -> Printf.sprintf "TFun \n (%s \n  %s)"
+  | TNum -> "Num"
+  | TBool -> "Bool"
+  | TFun e -> Printf.sprintf "Fun \n (%s \n  %s)"
                              (ty_to_string e.input)
                              (ty_to_string e.output)
   | TVar e -> 

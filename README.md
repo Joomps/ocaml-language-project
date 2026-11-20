@@ -1,20 +1,66 @@
 # ocaml-language-project
 Converting CS 321 work from PLAI to OCaml, Summer 2026
 
-Project overview:
+## Project overview
 A functional arithmetic language implemented in OCaml, built as a portfolio project targeting PL and formal verification roles. Features a two-stage pipeline with a minimal core language and a more expressive surface syntax, an environment-based interpreter using closures, and a Hindley-Milner type checker using algorithm W. Properties of the language will be formalized in Agda, including proofs of Progress and Preservation.
 
+## Architecture
+Parser ([lexer.mll](OCaml_Language_Project/lib/lexer.mll), [parser.mly](Ocaml_Language_Project/lib/parser.mly)) - tokenizes input text and assembles it into an sae AST.  
+Compiler ([desugar.ml](Ocaml_Language_Project/lib/desugar.ml)) - converts from sae to ae.  
+Type checker ([infer.ml](Ocaml_Language_Project/lib/infer.ml)) - type checks an ae expression.  
+Interpreter ([eval.ml](Ocaml_Language_Project/lib/eval.ml)) - evaluates ae, outputting the final value.
 
-Architecture:
-Parser (lexer.mll, parser.mly) - tokenizes input text and assembles it into an sae AST.
-Compiler (desugar.ml) - converts from sae to ae.
-Type checker (infer.ml) - type checks an ae expression.
-Interpreter (eval.ml) - evaluates ae, outputting the final value.
+## Build and Run
+1. Install [opam](https://opam.ocaml.org/doc/Install.html)
+2. Create a switch: 
+```sh
+opam switch create . 4.14.0
+```
+3. Install dependencies: 
+```sh
+opam install . --deps-only --with-test 
+```
+If that fails, try
+```sh
+opam install menhir base alcotest
+```
+4. Build and test: 
+```sh
+dune build
+dune test
+```
+5. Run a program: 
+```sh
+dune exec bin/main.exe < examples/arithmetic.txt
+``` 
+or 
+```sh
+echo "{+ 1 2}" | dune exec bin/main.exe
+```
 
-Build and Run:
+## Examples
 
-
-Design decisions:
+```sh
+dune exec bin/main.exe < examples/arithmetic.txt
+8 : Num
+``` 
+```sh
+dune exec bin/main.exe < examples/let_polymorphism.txt
+1 : Num
+``` 
+```sh
+dune exec bin/main.exe < examples/function.txt
+13 : Num
+``` 
+```sh
+dune exec bin/main.exe < examples/with_and_currying.txt
+6 : Num
+``` 
+```sh
+dune exec bin/main.exe < examples/type_error.txt
+Error: type error: cannot unify 
+``` 
+## Design decisions
 Even though the work done by the compiler is minimal enough to be reasonably fit into the parsing step, the two processes are separated. This greatly simplifies future work (including the addition of any new language functionality, compiler optimizations, and Agda formalization), as the interpreter, type checker, and Agda proofs only need to deal with ae, not sae.
 
 The language uses three core types: ae, sae, and aeValue. ae represents the core language, used by the interpreter, sae is most closely related to what the user inputs, and aeValue is only used at the end of the pipeline as the final output value. Having a surface level type separate from the core type allows the user to make use of with expressions and multi-argument functions while the core type remains as simple as possible.
@@ -25,7 +71,7 @@ Errors such as a nullary function or free identifier use the failwith function. 
 
 The language uses a Hindley-Milner type system so that the user doesn't need to include type annotations anywhere in their program. HM also supports let-polymorphism, allowing a single function (such as the identity function) to be used on any data type.
 
-The type checker uses a variant of algorithm W using mutable unification variables rather than explicit substitutions, following Oleg Kiselyov's tutorial (https://okmij.org/ftp/ML/generalization.html). This approach means a simpler data structure and earlier error detection.
+The type checker uses a variant of algorithm W using mutable unification variables rather than explicit substitutions, following [Oleg Kiselyov's tutorial](https://okmij.org/ftp/ML/generalization.html). This approach means a simpler data structure and earlier error detection.
 
 While with expressions are handled by replacing them with a function call in the compiler, let expressions are left as is. This is required for let-generalization as desugaring let into a function call would remove the point at which HM generalizes type variables. 
 
