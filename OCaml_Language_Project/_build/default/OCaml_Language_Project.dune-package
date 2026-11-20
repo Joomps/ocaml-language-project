@@ -1,4 +1,0 @@
-(lang dune 3.23)
-(name OCaml_Language_Project)
-(sections (lib .) (bin ../../bin))
-(files (lib (META dune-package opam)) (bin (OCaml_Language_Project)))

@@ -1,8 +1,0 @@
-lib: [
-  "_build/install/default/lib/OCaml_Language_Project/META"
-  "_build/install/default/lib/OCaml_Language_Project/dune-package"
-  "_build/install/default/lib/OCaml_Language_Project/opam"
-]
-bin: [
-  "_build/install/default/bin/OCaml_Language_Project"
-]

@@ -1,8 +1,0 @@
-[exception] OCaml_Language_Project.Parser.MenhirBasics.Error
-            Raised at OCaml_Language_Project__Parser.MenhirBasics._eRR in file "lib/parser.ml" (inlined), line 8, characters 6-17
-            Called from OCaml_Language_Project__Parser._menhir_run_00 in file "lib/parser.ml", line 984, characters 18-25
-            Called from OCaml_Language_Project__Parse.parse in file "lib/parse.ml", line 9, characters 8-37
-            Called from Dune__exe__Test.test_compile.(fun) in file "test/test.ml", line 107, characters 19-68
-            Called from Alcotest_engine__Core.Make.protect_test.(fun) in file "src/alcotest-engine/core.ml", line 186, characters 17-23
-            Called from Alcotest_engine__Monad.Identity.catch in file "src/alcotest-engine/monad.ml", line 24, characters 31-35
-            
