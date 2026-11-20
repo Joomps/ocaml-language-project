@@ -30,23 +30,17 @@ let rec type_check expr env lvl =
     let test_ty = force (type_check e.test env lvl) in
     let thn_ty = force (type_check e.thn env lvl) in
     let els_ty = force (type_check e.els env lvl) in
-    if test_ty = TNum
-      then begin
-        unify thn_ty els_ty;
-        thn_ty
-      end
-    else failwith ("type error: If0 expected num test")
+    unify test_ty TNum;
+    unify thn_ty els_ty;
+    thn_ty
   | True | False -> TBool
   | IfB e -> 
     let test_ty = force (type_check e.test env lvl) in
     let thn_ty = force (type_check e.thn env lvl) in
     let els_ty = force (type_check e.els env lvl) in
-    if test_ty = TBool
-      then begin
-        unify thn_ty els_ty;
-        thn_ty
-      end
-    else failwith ("type error: If0 expected bool test")
+    unify test_ty TBool;
+    unify thn_ty els_ty;
+    thn_ty
   | Let e -> 
     let named_ty = type_check e.named_expr env (lvl + 1) in
     generalize named_ty (lvl);

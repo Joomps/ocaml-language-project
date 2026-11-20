@@ -4,7 +4,7 @@ open OCaml_Language_Project
 
 let () = 
 
-let input_string = (*stdin*) in
+let input_string = In_channel.input_all stdin in
 
 try
   let parse_out = Parse.parse input_string in
@@ -15,9 +15,9 @@ try
                             (Pretty.ty_to_string infer_out)
                              
 with 
-  | Lexer.SyntaxError msg Printf.eprintf "Error: %s\n" msg 
+  | Lexer.SyntaxError msg -> Printf.eprintf "Error: %s\n" msg;
     exit 1
-  | Parser.Error -> Printf.eprintf "Error: Parser error\n"
+  | Parser.Error -> Printf.eprintf "Error: Parser error\n";
     exit 1
-  | Failure msg -> Printf.eprintf "Error: %s\n" msg
+  | Failure msg -> Printf.eprintf "Error: %s\n" msg;
     exit 1

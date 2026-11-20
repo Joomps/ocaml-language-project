@@ -220,6 +220,23 @@ Alcotest.test_case "Let generalization 5" `Quick (fun () ->
   (Parse.run_typed "{let {f {fun {x} x}} {ifb {f true} {f 1} {f 2}}}")
   "TNum"
 );
+Alcotest.test_case "With" `Quick (fun () ->
+  Alcotest.check Alcotest.string "With failed" 
+  (Parse.run_typed "{with {x 5}              
+                          {{fun {a b c}
+                                {if0 x
+                                    {+ {+ a b} c}
+                                    9}}
+                           1 2 3}}")
+  "TNum"
+);
+Alcotest.test_case "If0" `Quick (fun () ->
+  Alcotest.check Alcotest.string "With failed" 
+  (Parse.run_typed "{if0 {{fun {x} x} 5}
+                         0
+                         1}")
+  "TNum"
+);
 ]
 
 let () =

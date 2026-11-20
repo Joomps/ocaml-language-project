@@ -23,4 +23,4 @@ let rec force ty =
     (match !(t.contents) with
     | Link l -> force l.ty
     | _ -> ty)
-  | _ -> ty             
+  | _ -> ty

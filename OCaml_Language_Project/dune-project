@@ -18,7 +18,7 @@
 (package
  (name OCaml_Language_Project)
  (synopsis "Typed functional language in OCaml with Hindley-Milner type inference")
- (depends (ocaml (>= 4.13)) menhir base (alcotest :with-test))
+ (depends (ocaml (>= 4.14)) menhir base (alcotest :with-test))
  (tags
   ("programming-languages" "type-inference" "hindley-milner" "interpreter")))
 

@@ -11,6 +11,8 @@ Compiler (desugar.ml) - converts from sae to ae.
 Type checker (infer.ml) - type checks an ae expression.
 Interpreter (eval.ml) - evaluates ae, outputting the final value.
 
+Build and Run:
+
 
 Design decisions:
 Even though the work done by the compiler is minimal enough to be reasonably fit into the parsing step, the two processes are separated. This greatly simplifies future work (including the addition of any new language functionality, compiler optimizations, and Agda formalization), as the interpreter, type checker, and Agda proofs only need to deal with ae, not sae.
