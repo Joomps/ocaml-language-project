@@ -52,7 +52,7 @@ let rec ty_to_string expr =
   match expr with
   | TNum -> "Num"
   | TBool -> "Bool"
-  | TFun e -> Printf.sprintf "Fun \n (%s \n  %s)"
+  | TFun e -> Printf.sprintf "(%s  ->  %s)"
                              (ty_to_string e.input)
                              (ty_to_string e.output)
   | TVar e -> 

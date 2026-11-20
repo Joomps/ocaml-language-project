@@ -155,7 +155,7 @@ let test_type_check () = [
  Alcotest.test_case "Unification" `Quick (fun () ->
   Alcotest.check Alcotest.string "Unification failed" 
   (Parse.run_typed "{fun {x} {+ x 1}}")
-  "Fun \n (Num \n  Num)"
+  "(Num  ->  Num)"
 );
 Alcotest.test_case "Let generalization 1" `Quick (fun () ->
   Alcotest.check Alcotest.string "Let failed" 
