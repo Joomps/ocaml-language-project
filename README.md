@@ -104,7 +104,6 @@ Errors such as a nullary function or free identifier use the failwith function. 
 ### Create a switch: 
 ```sh
 opam switch create . 4.14.0
-eval $(opam env)
 ```
 
 ### Install dependencies: 
@@ -118,6 +117,7 @@ opam install menhir base alcotest
 
 ### Build and test: 
 ```sh
+cd OCaml_Language_Project
 dune build
 dune test
 ```

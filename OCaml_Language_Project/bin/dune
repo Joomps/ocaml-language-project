@@ -1,4 +1,4 @@
 (executable
  (public_name OCaml_Language_Project)
  (name main)
- (libraries base core OCaml_Language_Project))
+ (libraries base OCaml_Language_Project))
